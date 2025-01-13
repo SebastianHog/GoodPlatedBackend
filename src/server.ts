@@ -1,10 +1,10 @@
-// dependancies
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { createRecipes } from './Seed/createRecipe';
+import { apiRouter } from './routes/routes';
 
-// routes
 dotenv.config();
 
 const connectionString: any = process.env.MONGO_CONNECTION_STRING;
@@ -14,32 +14,22 @@ const port: number = 3042;
 
 app.use(cors());
 app.use(express.json());
+app.use('/api', apiRouter);
 
-app.get('/', (req, res) => {
-  res.send('working');
+app.post('/seed', async (req, res) => {
+  const rec = await createRecipes();
+  res.json(rec);
 });
 
 app.listen(port, () => {
   console.log('Listening on port: ', port);
 });
 
-const uri: any = process.env.MONGO_CONNECTION_STRING;
+mongoose
+  .connect(connectionString)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((error) => console.error('Error connecting to MongoDB:', error));
 
-const clientOptions: {} = {
-  serverApi: { version: '1', strict: true, deprecationErrors: true },
-};
-
-async function run() {
-  try {
-    console.log('trying');
-    await mongoose.connect(uri, clientOptions);
-    console.log('connected');
-    await mongoose.connection.db!.admin().command({ ping: 1 });
-    console.log(
-      'Pinged your deployment. You successfully connected to MongoDB!'
-    );
-  } finally {
-    await mongoose.disconnect();
-  }
-}
-run().catch(console.dir);
+mongoose.connection.on('connected', () =>
+  console.log('Mongoose connected to db')
+);
