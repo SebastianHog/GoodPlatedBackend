@@ -1,26 +1,27 @@
 {
-  "engines": {
-    "node": ">=20.6.0"
-  },
-  "name": "_goodplatesbackend",
+  "name": "goodplatesbackend",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "dev": "node --env-file=.env --watch -r ts-node/register src/index.ts",
+    "dev": "tsc && node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "^1.7.9",
-    "express": "^4.21.2"
-  },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
-    "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.4"
   }
 }
