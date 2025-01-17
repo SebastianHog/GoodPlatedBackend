@@ -1,20 +1,21 @@
-import { error } from 'console';
 import { Request, Response } from 'express';
 import Recipes from '../../models/Recipe';
-import { recipeRouter } from '../../routes/recipe/recipeRouter';
 
 export const createRecipe = async (req: Request, res: Response) => {
   try {
-    const { title, description, creator } = req.body;
-
-    if (!title || !description || !creator) {
+    const { title, description, creator, thumbnail } = req.body;
+    if (!title || !description || !creator || !thumbnail) {
       res.status(400).json({
-        message: 'Invalid request, need title, description and creator.',
+        message:
+          'Invalid request, need title, description, thumbnail and creator.',
+        body: req.body,
       });
+      return;
     }
     const newRecipe = new Recipes({
       title,
       description,
+      thumbnail,
       creator,
       date_posted: new Date(),
     });

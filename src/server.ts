@@ -16,6 +16,11 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', apiRouter);
 
+app.post('/test', async (req, res) => {
+  console.log(req.body);
+  res.json(req.body);
+});
+
 app.post('/seed', async (req, res) => {
   const rec = await createRecipes();
   res.json(rec);
