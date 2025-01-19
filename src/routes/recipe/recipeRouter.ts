@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createRecipe } from '../../utils/recipe_utils/createRecipe';
-import { getRecipes } from '../../utils/recipe_utils/getRecipeFuncs';
+import { createRecipe } from '../../services/recipe/createRecipe';
+import { getRecipes } from '../../services/recipe/getRecipeFuncs';
 
 const router = Router();
 
