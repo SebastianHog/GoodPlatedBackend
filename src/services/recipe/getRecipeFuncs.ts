@@ -5,7 +5,10 @@ export const getRecipes = async (req: Request, res: Response) => {
   try {
     switch (req.query.recipeRequest) {
       case 'by_id':
-        res.status(200).json({ message: 'Getting recipe by id' });
+        const recipe = await Recipes.findById(req.query.recipeId);
+        res
+          .status(200)
+          .json({ message: 'Getting recipe by id', recipe: recipe });
         break;
       case 'by_author':
         res.status(200).json({ message: 'Getting recipe(s) by author' });
@@ -20,7 +23,7 @@ export const getRecipes = async (req: Request, res: Response) => {
           .json({ message: 'Getting all recipes', recipes: allRecipes });
         break;
       default:
-        console.log('Defaulted');
+        console.error('Defaulted');
         res.status(400).json({ message: 'Switch defaulted, invalid body.' });
         break;
     }
