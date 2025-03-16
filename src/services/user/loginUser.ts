@@ -23,8 +23,14 @@ export const loginUser = async (req: Request, res: Response) => {
 
     const passMatch = await bcrypt.compare(password, userExists.password);
 
+    if (!passMatch) {
+      console.log('Invalid password.');
+      res.status(401).json({ message: 'Invalid password.' });
+      return;
+    }
+    console.log('Login successful.');
     const token = jwt.sign({ id: userExists._id }, secretKey, {
-      expiresIn: '1y',
+      expiresIn: '1d',
     });
 
     res.cookie('login_token', token, {
@@ -34,7 +40,7 @@ export const loginUser = async (req: Request, res: Response) => {
       maxAge: 31536000000,
     });
 
-    res.status(200).json({ message: 'Login successful.', token });
+    res.status(200).json({ user: userExists, token });
   } catch (error: any) {
     console.error('Login error:', error.message);
     res.status(500).json({ message: 'Internal server error.' });
