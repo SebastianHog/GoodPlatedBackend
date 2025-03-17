@@ -8,6 +8,6 @@ const router = Router();
 
 // router.get('/authenticate', authenticateUser);
 
-router.get('/data', getUserData);
+router.get('/:id', getUserData);
 
 export const userRouter = router;
