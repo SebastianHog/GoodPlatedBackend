@@ -9,6 +9,7 @@ dotenv.config();
 
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  console.log('Trying to log in');
   const secretKey: Secret | undefined = process.env.SECRET_KEY;
   if (!secretKey) {
     res.status(500).json({ message: 'Server configuration error.' });
