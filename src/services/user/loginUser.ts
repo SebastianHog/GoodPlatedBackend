@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import User from '../../models/User';
-import { authenticateUser } from '../../middleware/authenticateUser';
 import jwt, { Secret } from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
@@ -9,7 +8,6 @@ dotenv.config();
 
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log('Trying to log in');
   const secretKey: Secret | undefined = process.env.SECRET_KEY;
   if (!secretKey) {
     res.status(500).json({ message: 'Server configuration error.' });
@@ -30,6 +28,7 @@ export const loginUser = async (req: Request, res: Response) => {
       return;
     }
     console.log('Login successful.');
+
     const token = jwt.sign({ id: userExists._id }, secretKey, {
       expiresIn: '1d',
     });
