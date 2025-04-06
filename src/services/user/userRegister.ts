@@ -29,8 +29,6 @@ export const registerUser = async (req: Request, res: Response) => {
       email,
     });
 
-    console.log(newUser);
-
     await newUser.save();
 
     res.status(201).json({ message: 'Registered', user: newUser });
@@ -48,7 +46,6 @@ const encryptPassword = async (password: string) => {
   const salt = 10;
   bcrypt.genSalt(salt, function (err, salt) {
     bcrypt.hash(password, salt, function (err, hash) {
-      console.log('hash: ', hash);
       hashed = hash;
     });
   });

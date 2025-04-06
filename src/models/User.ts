@@ -33,6 +33,10 @@ const UserSchema = new Schema<IUser>({
     type: Date,
     default: Date.now,
   },
+  // _id: {
+  //   type: String,
+  //   default: () => new mongoose.Types.ObjectId().toString(),
+  // },
 });
 
 const User = model('user', UserSchema);

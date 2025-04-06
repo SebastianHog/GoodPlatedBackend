@@ -27,18 +27,17 @@ export const loginUser = async (req: Request, res: Response) => {
       res.status(401).json({ message: 'Invalid password.' });
       return;
     }
-    console.log('Login successful.');
 
     const token = jwt.sign({ id: userExists._id }, secretKey, {
       expiresIn: '1d',
     });
 
-    res.cookie('login_token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 31536000000,
-    });
+    // res.cookie('login_token', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: 'none',
+    //   maxAge: 31536000000,
+    // });
 
     res.status(200).json({ user: userExists, token });
   } catch (error: any) {
