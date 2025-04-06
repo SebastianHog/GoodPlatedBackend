@@ -45,4 +45,4 @@ The backend should now be running locally.
 
 ## Notes
 
-- The backend connects to a MongoDB Atlas database using the `MONGO_CONNECTION_STRING` defined in the `.env` file.
+- The backend connects to a MongoDB database using the `MONGO_CONNECTION_STRING` defined in the `.env` file.
