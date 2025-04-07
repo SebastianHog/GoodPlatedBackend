@@ -1,5 +1,4 @@
-import User, { IUser } from '../models/User';
-import bcrypt from 'bcrypt';
+import User from '../models/User';
 import dotenv from 'dotenv';
 import jwt, { Secret } from 'jsonwebtoken';
 dotenv.config();
@@ -7,9 +6,6 @@ dotenv.config();
 const secretKey: Secret | undefined = process.env.SECRET_KEY;
 
 export const authenticateUser = async (req: any, res: any, next: any) => {
-  // if (req.headers['authorization'] === undefined) {
-  //   return res.status(401).json({ message: 'Unauthorized: Tokenless' });
-  // }
   const token = req.cookies['login_token'];
 
   if (!token)

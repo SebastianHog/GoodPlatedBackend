@@ -1,12 +1,14 @@
 import { Request, Response } from 'express';
 import Recipes from '../../models/Recipe';
-import User from '../../models/User';
+import mongoose from 'mongoose';
 
 export const getRecipes = async (req: Request, res: Response) => {
   try {
     switch (req.query.recipeRequest) {
       case 'by_id':
-        const recipe = await Recipes.findById(req.query.recipeId);
+        const recipe = await Recipes.findById(req.query.recipeId)
+          .populate('creator')
+          .lean();
 
         res
           .status(200)
@@ -15,14 +17,17 @@ export const getRecipes = async (req: Request, res: Response) => {
 
       case 'by_author':
         const recipesbyAuthor = await Recipes.find({
-          creator: req.query.author,
-        });
+          creator: req.query.author, // WHAT THE FUCK DO I DO HERE
+        })
+          .populate('creator')
+          .lean();
         res.status(200).json({
           message: 'Getting recipe(s) by author',
           count: recipesbyAuthor.length,
           recipes: recipesbyAuthor,
         });
         break;
+
       case 'random':
         Recipes.countDocuments({
           title: { $exists: true },
@@ -32,7 +37,9 @@ export const getRecipes = async (req: Request, res: Response) => {
             const rand = Math.floor(Math.random() * count);
 
             Recipes.findOne()
+              .populate('creator')
               .skip(rand)
+              .lean()
               .then((recipe) => {
                 res.status(200).json({
                   message: 'Getting one random recipe',
@@ -45,12 +52,14 @@ export const getRecipes = async (req: Request, res: Response) => {
           });
 
         break;
+
       case 'all':
-        const allRecipes = await Recipes.find();
+        const allRecipes = await Recipes.find().populate('creator').lean();
         res
           .status(200)
           .json({ message: 'Getting all recipes', recipes: allRecipes });
         break;
+
       default:
         console.error('Defaulted');
         res.status(400).json({ message: 'Switch defaulted, invalid body.' });

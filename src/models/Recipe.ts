@@ -1,13 +1,13 @@
-import mongoose, { model, Document } from 'mongoose';
+import mongoose, { model, Document, Types } from 'mongoose';
+import { IUser } from './User';
 
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 export interface IRecipe extends Document {
   title: string;
   description: string;
   thumbnail: string;
-  creator: string;
+  creator: Types.ObjectId | IUser;
   date_posted?: Date;
 }
 
@@ -28,7 +28,11 @@ const RecipeSchema = new Schema<IRecipe>({
     type: String,
     required: [true, 'A Thumbnail is required'],
   },
-  creator: { type: String, required: [true, 'Creator is required'] },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+    required: true,
+  },
   date_posted: { type: Date, default: Date.now },
 });
 

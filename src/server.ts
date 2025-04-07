@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { createRecipes } from './Seed/createRecipe';
+// import { createRecipes } from './Seed/createRecipe';
 import { apiRouter } from './routes/routes';
 import cookieParser from 'cookie-parser';
 
@@ -30,10 +30,10 @@ app.post('/test', async (req, res) => {
   res.json(req.body);
 });
 
-app.post('/seed', async (req, res) => {
-  const rec = await createRecipes();
-  res.json(rec);
-});
+// app.post('/seed', async (req, res) => {
+//   const rec = await createRecipes();
+//   res.json(rec);
+// });
 
 app.listen(port, () => {
   console.log('Listening on port: ', port);
