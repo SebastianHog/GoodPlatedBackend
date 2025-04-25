@@ -2,12 +2,20 @@ import { Request, Response } from 'express';
 import Recipes from '../../models/Recipe';
 
 export const createRecipe = async (req: Request, res: Response) => {
+  console.log('Creating recipe...');
   try {
-    const { title, description, creator, thumbnail } = req.body;
-    if (!title || !description || !creator || !thumbnail) {
+    const { title, description, steps, requirements, creator, thumbnail } =
+      req.body;
+    if (
+      !title ||
+      !description ||
+      !steps ||
+      !requirements ||
+      !creator ||
+      !thumbnail
+    ) {
       res.status(400).json({
-        message:
-          'Invalid request, need title, description, thumbnail and creator.',
+        message: 'Invalid request, some field is missing.',
         body: req.body,
       });
       return;
@@ -15,6 +23,8 @@ export const createRecipe = async (req: Request, res: Response) => {
     const newRecipe = new Recipes({
       title,
       description,
+      requirements,
+      steps,
       thumbnail,
       creator,
       date_posted: new Date(),
@@ -26,6 +36,6 @@ export const createRecipe = async (req: Request, res: Response) => {
   } catch (error: unknown) {
     console.error('Unknown error:', error);
 
-    res.status(500).json({ message: 'Error creating recipe' });
+    res.status(500).json({ message: 'Error creating recipe', error: error });
   }
 };
