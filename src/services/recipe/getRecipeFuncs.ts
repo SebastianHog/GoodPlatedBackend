@@ -17,7 +17,7 @@ export const getRecipes = async (req: Request, res: Response) => {
 
       case 'by_author':
         const recipesbyAuthor = await Recipes.find({
-          creator: req.query.author, // WHAT THE FUCK DO I DO HERE
+          creator: req.query.author,
         })
           .populate('creator')
           .lean();
