@@ -2,14 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-// import { createRecipes } from './Seed/createRecipe';
 import { apiRouter } from './routes/routes';
 import cookieParser from 'cookie-parser';
-
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://good-plates-nuxt3.vercel.app',
-];
 
 dotenv.config();
 
@@ -19,9 +13,14 @@ const app = express();
 
 const port: number = 3042;
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://good-plates-nuxt3.vercel.app',
+];
+
 const corsOptions = {
   origin: (
-    origin: string,
+    origin: string | undefined,
     callback: (err: Error | null, allow?: boolean) => void
   ) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -43,11 +42,6 @@ app.post('/test', async (req, res) => {
   console.log(req.body);
   res.json(req.body);
 });
-
-// app.post('/seed', async (req, res) => {
-//   const rec = await createRecipes();
-//   res.json(rec);
-// });
 
 app.listen(port, () => {
   console.log('Listening on port: ', port);
