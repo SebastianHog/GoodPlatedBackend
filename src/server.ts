@@ -6,6 +6,11 @@ import mongoose from 'mongoose';
 import { apiRouter } from './routes/routes';
 import cookieParser from 'cookie-parser';
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://good-plates-nuxt3.vercel.app',
+];
+
 dotenv.config();
 
 const connectionString: any = process.env.MONGO_CONNECTION_STRING;
@@ -15,7 +20,16 @@ const app = express();
 const port: number = 3042;
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: (
+    origin: string,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
 
