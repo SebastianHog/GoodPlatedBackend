@@ -41,7 +41,7 @@ const RecipeSchema = new Schema<IRecipe>({
           type: String,
           required: [true, 'A step description is required'],
           minlength: [1, 'Step description needs minimum 1 characters.'],
-          maxlength: [1250, 'Step description allows maximum 1250 characters.'],
+          maxlength: [6000, 'Step description allows maximum 6000 characters.'],
         },
       },
     ],
@@ -76,7 +76,7 @@ const RecipeSchema = new Schema<IRecipe>({
     type: String,
     required: [true, 'A description is required'],
     minlength: [5, 'Description needs minimum 5 characters.'],
-    maxlength: [1250, 'Description allows maximum 1250 characters.'],
+    maxlength: [6000, 'Description allows maximum 6000 characters.'],
   },
   thumbnail: {
     type: String,
