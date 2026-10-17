@@ -2,6 +2,8 @@
 
 This repository contains everything needed to run the backend for a local version of [GoodPlates](https://GoodPlates.se).
 
+This was for my final school project. New version with more care put into it can be found at [GoodPlates2026](https://github.com/SebastianHog/GoodPlates2026)
+
 You can find the frontend repository [here](https://github.com/SebastianHog/GoodPlatesNuxt3).
 
 ## Setup
